@@ -1,2 +1,11 @@
 # CleanArchietctureMVVMCurrencyApp
-This project with design and developer with complete new a Android Architecture by using MVVM and Clean Architecture Pattern by Uncle Bob. Moreover in this project I used Jetpack Compose, Coroutines, Dagger-Hilt and Retrofit.
+# @author Muhammad Noman
+
+This project of Currency App is design and developed by using the MVVM and Clean Architecture (By Uncle Bob)
+
+This is project following advance techniques are used:
+- Jetpack Compose
+- Kotlin Coroutines
+- Dagger-Hilt
+- Retrofit
+
