@@ -11,3 +11,5 @@ This is project following advance techniques are used:
 
 # Hint
 Presentation(View - View Model) / Domain (Use-cases - Repository) / Data (Model - Repository Implementation)
+
+# Zero Warning Project at 02 October 2021
