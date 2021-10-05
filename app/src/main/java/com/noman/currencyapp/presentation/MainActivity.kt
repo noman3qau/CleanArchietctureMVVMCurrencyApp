@@ -6,6 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -34,7 +36,7 @@ class MainActivity : ComponentActivity() {
                         composable(
                             route = Screens.CoinListScreen.route
                         ) {
-                            CoinListScreen(navController)
+                            CoinListScreen(this@MainActivity, navController)
                         }
                         composable(
                             route = Screens.CoinDetailScreen.route + "/{coinId}"

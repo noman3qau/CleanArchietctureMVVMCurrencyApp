@@ -23,6 +23,7 @@ import com.noman.currencyapp.presentation.coindetail.components.CoinTags
 import com.noman.currencyapp.presentation.coindetail.components.TeamListItem
 import com.noman.currencyapp.presentation.coinlist.components.CoinListItem
 import com.noman.currencyapp.presentation.coinlist.components.CoinListViewModel
+import com.noman.currencyapp.presentation.coinlist.components.TopToolBar
 
 @Composable
 fun CoinDetailScreen(
@@ -33,83 +34,88 @@ fun CoinDetailScreen(
 
     Box(modifier = Modifier.fillMaxSize()) {
         state.coinItem?.let { coinItem ->
-            /**
-             * Column to show the item as Column
-             */
-            LazyColumn(
-                modifier = Modifier.fillMaxWidth(),
-                contentPadding = PaddingValues(20.dp)
-            ) {
-                item {
-                    /**
-                     * Show active/inactive in a Row
-                     */
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
+            Column(modifier = Modifier.fillMaxWidth()) {
+                TopToolBar(title = state.coinItem.name, onItemClick = {})
+                /**
+                 * Column to show the item as Column
+                 */
+                LazyColumn(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding = PaddingValues(20.dp)
+                ) {
+                    item {
+                        /**
+                         * Show active/inactive in a Row
+                         */
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = if (coinItem.is_active) "Active" else "Inactive",
+                                color = if (coinItem.is_active) Color.Green else Color.Red,
+                                fontStyle = FontStyle.Italic,
+                                textAlign = TextAlign.End,
+                                modifier = Modifier
+                                    .align(CenterVertically)
+                                    .weight(2f)
+                            )
+                        }
+                        /**
+                         * Next item space
+                         */
+                        Spacer(modifier = Modifier.height(15.dp))
+                        /**
+                         * Description Text
+                         */
                         Text(
-                            text = if (coinItem.is_active) "Active" else "Inactive",
-                            color = if (coinItem.is_active) Color.Green else Color.Red,
-                            fontStyle = FontStyle.Italic,
-                            textAlign = TextAlign.End,
-                            modifier = Modifier
-                                .align(CenterVertically)
-                                .weight(2f)
+                            text = coinItem.description,
+                            style = MaterialTheme.typography.body2
                         )
+                        Spacer(modifier = Modifier.height(15.dp))
+                        /**
+                         * Tags here
+                         */
+                        Text(
+                            text = "Tags",
+                            style = MaterialTheme.typography.h3
+                        )
+                        Spacer(modifier = Modifier.height(15.dp))
+                        FlowRow(
+                            mainAxisSpacing = 10.dp,
+                            crossAxisSpacing = 10.dp,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            coinItem.tags.forEach { tag ->
+                                CoinTags(tag = tag.name)
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(15.dp))
+                        /**
+                         * Team list title
+                         */
+                        Text(
+                            text = "Team Members",
+                            style = MaterialTheme.typography.h3
+                        )
+                        Spacer(modifier = Modifier.height(15.dp))
                     }
                     /**
-                     * Next item space
+                     * Show Team list here
                      */
-                    Spacer(modifier = Modifier.height(15.dp))
-                    /**
-                     * Description Text
-                     */
-                    Text(
-                        text = coinItem.description,
-                        style = MaterialTheme.typography.body2
-                    )
-                    Spacer(modifier = Modifier.height(15.dp))
-                    /**
-                     * Tags here
-                     */
-                    Text(
-                        text = "Tags",
-                        style = MaterialTheme.typography.h3
-                    )
-                    Spacer(modifier = Modifier.height(15.dp))
-                    FlowRow(
-                        mainAxisSpacing = 10.dp,
-                        crossAxisSpacing = 10.dp,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        coinItem.tags.forEach { tag ->
-                            CoinTags(tag = tag.name)
+                    coinItem.team?.let { teams ->
+                        items(teams) { member ->
+                            TeamListItem(
+                                team = member, modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(10.dp)
+                            )
+                            /**
+                             * Divider for each team member item
+                             */
+                            Divider()
                         }
                     }
-                    Spacer(modifier = Modifier.height(15.dp))
-                    /**
-                     * Team list title
-                     */
-                    Text(
-                        text = "Team Members",
-                        style = MaterialTheme.typography.h3
-                    )
-                    Spacer(modifier = Modifier.height(15.dp))
-                }
-                /**
-                 * Show Team list here
-                 */
-                items(coinItem.team) { member ->
-                    TeamListItem(
-                        team = member, modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(10.dp)
-                    )
-                    /**
-                     * Divider for each team member item
-                     */
-                    Divider()
                 }
             }
         }
